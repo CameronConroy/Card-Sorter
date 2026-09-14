@@ -2,22 +2,26 @@ from nicegui import ui
 from models import Card
 
 
-deck = [
-    Card("A", "Spades"),
-]
+ranks = ["A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2"]
+suits = ["Spades", "Hearts", "Diamonds", "Clubs"]
+
+deck = []
+
+for suit in suits:
+    for rank in ranks:
+        deck.append(Card(rank, suit))
 
 
 hidden = False
-
 
 @ui.refreshable
 def cardGrid():
     with ui.element("div").props('id=card-container'):
         for card in deck:
-            ui.image("https://static.vecteezy.com/system/resources/thumbnails/004/442/850/small/ace-of-spades-playing-card-isolated-free-vector.jpg").props(
+            ui.image().props(
                 f'data-id="{card.id}"'
             )
 
 cardGrid()
-
 ui.run()
+print(len(deck))
