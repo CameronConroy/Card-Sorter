@@ -24,8 +24,3 @@ RANK_ORDER = [
 ]
 
 
-card = Card("A", "Spades")
-
-print(card.rank)
-print(card.suit)
-print(card.id)
