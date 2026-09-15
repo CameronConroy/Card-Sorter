@@ -1,2 +1,7 @@
 nicegui
 pydealer
+opencv-python
+numpy
+picamera2
+gpiozero
+flask

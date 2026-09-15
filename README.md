@@ -47,17 +47,17 @@ The planned processing flow is:
 
 ```text
 Deck
-  ↓
+
 Card feed
-  ↓
+
 Camera
-  ↓
+
 OpenCV identification
-  ↓
+
 Card routing mechanism
-  ↓
+
 Carousel
-  ↓
+
 Sorting bucket
 ```
 
