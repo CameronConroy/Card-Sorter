@@ -12,7 +12,7 @@ hiddenLocked = False
 
 app.add_static_files("/static", "static")
 
-# CSS for website
+# Website CSS
 ui.add_css("""
     body, .q-page, .nicegui-content {
         background: #050505 !important;
@@ -112,20 +112,20 @@ ui.add_css("""
 """)
 
 
-# Image path generator
+# Generate image path for card
 def cardImage(card):
     filename = f"{card.value.lower()}_of_{card.suit.lower()}.png"
     return f"/static/cards/{filename}"
 
 
-# Drag and drop cards
+# Move a card to a new position
 def moveCard(event):
     cards = list(deck)
     cards.insert(event.new_index, cards.pop(event.old_index))
     deck.set_cards(cards)
 
 
-# Hide cards
+# Toggle deck being hidden
 def toggleHidden():
     global hidden
 
@@ -137,13 +137,13 @@ def toggleHidden():
     cardsList.refresh()
 
 
-# Randomize deck order
+# Randomize the cards without changing whether they are hidden.
 def randomizeDeck():
     deck.shuffle()
     cardsList.refresh()
 
 
-# Randomize cards and force hidden till reset
+# Randomize the cards and keep them hidden until the order is reset.
 def randomizeHidden():
     global hidden, hiddenLocked
 
@@ -153,7 +153,7 @@ def randomizeHidden():
     cardsList.refresh()
 
 
-# Reset deck to original state
+# Reset the deck order, reveal the cards, and unlock hidden mode.
 def resetDeck():
     global hidden, hiddenLocked
 
@@ -163,21 +163,26 @@ def resetDeck():
     cardsList.refresh()
 
 
-# Submit deck order to api
+# Save the current deck order in a variable that the API can return.
 def submitDeck():
     submittedDeck[:] = [card.name for card in deck]
     ui.notify("Deck submitted", color="positive")
 
 
 # Call deck order api
-@app.get("/api/deck")
-def getSubmittedDeck():
-    return {"cards": submittedDeck}
+@app.get("/cards")
+def getCards():
+    return {"cards": submittedDeck, "total": len(submittedDeck)}
+
+@app.post("/reset")
+def resetApi():
+    submittedDeck.clear()
+    return {"status": "cleared"}
 
 
 @ui.refreshable
 
-# Display cards in website
+# Adds cards to website
 def cardsList():
     with ui.row().classes("card-container w-full no-wrap gap-0") as container:
         for card in deck:
@@ -191,8 +196,7 @@ def cardsList():
             ghost_class="card-placeholder",
         )
 
-
-# Website buttons
+# Website Buttons
 with ui.row().classes("w-full items-center"):
     ui.button("Toggle hidden", on_click=toggleHidden, icon="visibility")
     ui.button("Randomize", on_click=randomizeDeck, icon="shuffle")
