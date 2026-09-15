@@ -12,7 +12,7 @@ hiddenLocked = False
 
 app.add_static_files("/static", "static")
 
-# CSS styles for the card container and individual playing cards, including hover effects and drag-and-drop styling. The styles ensure that the cards are displayed in a horizontal row with appropriate spacing, shadows, and transitions for a smooth user experience when interacting with the cards.
+# CSS for website
 ui.add_css("""
     body, .q-page, .nicegui-content {
         background: #050505 !important;
@@ -112,20 +112,20 @@ ui.add_css("""
 """)
 
 
-# Function to generate the image path for a given card.
+# Image path generator
 def cardImage(card):
     filename = f"{card.value.lower()}_of_{card.suit.lower()}.png"
     return f"/static/cards/{filename}"
 
 
-# Function to move a card to a new position in the deck.
+# Drag and drop cards
 def moveCard(event):
     cards = list(deck)
     cards.insert(event.new_index, cards.pop(event.old_index))
     deck.set_cards(cards)
 
 
-# Toggle between card faces and card backs unless hidden mode is locked.
+# Hide cards
 def toggleHidden():
     global hidden
 
@@ -137,13 +137,13 @@ def toggleHidden():
     cardsList.refresh()
 
 
-# Randomize the cards without changing whether they are hidden.
+# Randomize deck order
 def randomizeDeck():
     deck.shuffle()
     cardsList.refresh()
 
 
-# Randomize the cards and keep them hidden until the order is reset.
+# Randomize cards and force hidden till reset
 def randomizeHidden():
     global hidden, hiddenLocked
 
@@ -153,7 +153,7 @@ def randomizeHidden():
     cardsList.refresh()
 
 
-# Reset the deck order, reveal the cards, and unlock hidden mode.
+# Reset deck to original state
 def resetDeck():
     global hidden, hiddenLocked
 
@@ -163,13 +163,13 @@ def resetDeck():
     cardsList.refresh()
 
 
-# Save the current deck order in a variable that the API can return.
+# Submit deck order to api
 def submitDeck():
     submittedDeck[:] = [card.name for card in deck]
     ui.notify("Deck submitted", color="positive")
 
 
-# Return the last submitted deck when /api/deck is called.
+# Call deck order api
 @app.get("/api/deck")
 def getSubmittedDeck():
     return {"cards": submittedDeck}
@@ -177,7 +177,7 @@ def getSubmittedDeck():
 
 @ui.refreshable
 
-# Sortable list of cards in website UI. The cards can be dragged and dropped to change their order. The order is maintained in the `deck` object, and the UI updates accordingly when the order changes.
+# Display cards in website
 def cardsList():
     with ui.row().classes("card-container w-full no-wrap gap-0") as container:
         for card in deck:
@@ -192,6 +192,7 @@ def cardsList():
         )
 
 
+# Website buttons
 with ui.row().classes("w-full items-center"):
     ui.button("Toggle hidden", on_click=toggleHidden, icon="visibility")
     ui.button("Randomize", on_click=randomizeDeck, icon="shuffle")
