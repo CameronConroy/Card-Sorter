@@ -105,12 +105,12 @@ Currently implemented:
 - Hidden-card randomization
 - Deck reset
 - Submitted deck API
+- OpenCV card recognition
+- Camera integration
 
 In development:
 
 - Sort algorithm
-- OpenCV card recognition
-- Camera integration
 - Carousel control
 - Card feed mechanism
 - Motor and servo control
