@@ -169,16 +169,9 @@ def submitDeck():
     ui.notify("Deck submitted", color="positive")
 
 
-<<<<<<< Updated upstream:main.py
 # Return the last submitted deck when /api/deck is called.
-=======
+
 # Call deck order api
-<<<<<<< Updated upstream
->>>>>>> Stashed changes:website.py
-@app.get("/api/deck")
-def getSubmittedDeck():
-    return {"cards": submittedDeck}
-=======
 @app.get("/cards")
 def getCards():
     return {"cards": submittedDeck, "total": len(submittedDeck)}
@@ -187,7 +180,6 @@ def getCards():
 def resetApi():
     submittedDeck.clear()
     return {"status": "cleared"}
->>>>>>> Stashed changes
 
 
 @ui.refreshable
