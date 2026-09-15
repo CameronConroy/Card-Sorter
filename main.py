@@ -1,16 +1,8 @@
 from nicegui import ui
-from models import Card
+import pydealer
 
 
-ranks = ["A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2"]
-suits = ["Spades", "Hearts", "Diamonds", "Clubs"]
-
-deck = []
-
-for suit in suits:
-    for rank in ranks:
-        deck.append(Card(rank, suit))
-
+deck = pydealer.Deck()
 
 hidden = False
 
@@ -18,10 +10,10 @@ hidden = False
 def cardGrid():
     with ui.element("div").props('id=card-container'):
         for card in deck:
-            ui.image().props(
-                f'data-id="{card.id}"'
-            )
+            print(card.name)
+            
+
+
+ui.run()
 
 cardGrid()
-ui.run()
-print(len(deck))
