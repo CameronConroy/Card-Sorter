@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 2222
 
-CMD ["python", "website.py, scan.py"]
+CMD ["python", "website.py", "scan.py"]
